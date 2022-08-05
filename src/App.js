@@ -11,10 +11,16 @@ import Home from "./pages/home"
 import Quiz from "./pages/quiz"
 import { useState } from "react"
 
+import axios from 'axios';
+
+const getLearnedMineralsURL = (activeLearner) => {
+  return process.env.REACT_APP_BACKEND_URL 
+      + '/learners/' + activeLearner.id + "/learnedMineralIds"
+};
 
 function App() {
-
   const [activeLearner, setActiveLearner] = useState(null);
+  const [mineralsLearned, setMineralsLearned] = useState(null);
 
   const Navigation = () => {
     return (
@@ -32,11 +38,22 @@ function App() {
 
   const loginStatus = activeLearner === null ? 
       "Please log in" : "Logged in as " + activeLearner.name;
+    
+  if (activeLearner !== null) {
+    axios.get(getLearnedMineralsURL(activeLearner)).then((response) => {
+                setMineralsLearned(response.data.length);
+             });
+  }
+
+  const hideMineralsLearned = mineralsLearned === null || activeLearner === null;
+  const mineralsLearnedStatus = hideMineralsLearned ?
+    "" : " " + mineralsLearned + " minerals learned!"
 
   return (
     <main>
       <h1>MiniMin</h1>
       <h2>{loginStatus}</h2>
+      <h2>{mineralsLearnedStatus}</h2>
       <BrowserRouter>
         <Navigation></Navigation>
         <Routes>

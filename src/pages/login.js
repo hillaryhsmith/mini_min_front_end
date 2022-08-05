@@ -1,30 +1,35 @@
 import axios from 'axios';
 import { useState } from "react" 
 
+const getLoginURL = (username, password) => {
+    return process.env.REACT_APP_BACKEND_URL
+        + '/learners'
+        + '/' + username
+        + '/' + password
+        + '/login';
+};
+
 const Login = ({setActiveLearner}) => {
 
     const [loginMessage, setLoginMessage] = useState("Login");
-
-    const getLoginURL = (username, password) => {
-        return 'http://localhost:8080' 
-            + '/learners'
-            + '/' + username
-            + '/' + password
-            + '/login';
-    };
 
     const attemptLogin = () => {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
         
         axios.get(getLoginURL(username, password)).then((response) => {
-            console.log(response.data);
             setActiveLearner({id: response.data, name: username});
             setLoginMessage("Login successful!");
         }).catch((err) => {
             setLoginMessage("Login failed!");
         });
     };
+
+    const logout = () => {
+        setActiveLearner(null);
+        setLoginMessage("Login");
+    }
+
     return (
     <div>
         <h1>{loginMessage}</h1>
@@ -39,6 +44,11 @@ const Login = ({setActiveLearner}) => {
         <div>
             <button type="button" onClick={attemptLogin}>
             Submit credentials
+            </button>
+        </div>
+        <div>
+            <button type="button" onClick={logout}>
+            Log out
             </button>
         </div>
     </div>
