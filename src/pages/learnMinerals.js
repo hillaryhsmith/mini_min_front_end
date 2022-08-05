@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { useState } from "react"; 
-import { act } from 'react-dom/test-utils';
 
 const getNewMineralURL = (activeLearner) => {
     const activeLearnerID = activeLearner.id;
     return process.env.REACT_APP_BACKEND_URL
         + '/learners' 
         + "/" + activeLearnerID
-        + "randomUnlearnedMineral"; 
+        + "/randomUnlearnedMineral"; 
 };
 
 
@@ -30,7 +29,7 @@ const LearnMinerals = ({activeLearner}) => {
     return (
         <div>
             <h1>Learn Minerals</h1>
-            <h3>{mineralData}</h3>
+            <h3>{JSON.stringify(mineralData)}</h3>
         </div>
     
     );

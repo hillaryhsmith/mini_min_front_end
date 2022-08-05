@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { useState } from "react" 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+
 
 const registerNewLearnerURL = process.env.REACT_APP_BACKEND_URL
 + '/learners';
@@ -14,6 +17,7 @@ const anyEmpty = (username, password, email) => {
 
 const Register = () => {
     const [registrationMessage, setRegistrationMessage] = useState("");
+    const navigate = useNavigate();
     
     const registerNewLearner = () => {
         const username = document.getElementById("username").value;
@@ -29,7 +33,7 @@ const Register = () => {
             "password" : password,
             "email" : email
         }).then((response) => {
-            setRegistrationMessage("Registration successful!")
+            navigate("/about");
         }).catch((err) => {
             setRegistrationMessage("Registration failed!");
         });
@@ -45,7 +49,7 @@ const Register = () => {
         </div>
         <div id="passwordInput">
             <label>Password:</label>
-            <input type="text" id="password"/>
+            <input type="password" id="password"/>
         </div>
         <div id="emailInput">
             <label>Email address:</label>

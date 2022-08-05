@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { useState } from "react" 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const getLoginURL = (username, password) => {
     return process.env.REACT_APP_BACKEND_URL
@@ -10,8 +11,8 @@ const getLoginURL = (username, password) => {
 };
 
 const Login = ({setActiveLearner}) => {
-
     const [loginMessage, setLoginMessage] = useState("Login");
+    const navigate = useNavigate();
 
     const attemptLogin = () => {
         const username = document.getElementById("username").value;
@@ -19,7 +20,7 @@ const Login = ({setActiveLearner}) => {
         
         axios.get(getLoginURL(username, password)).then((response) => {
             setActiveLearner({id: response.data, name: username});
-            setLoginMessage("Login successful!");
+            navigate("/about");
         }).catch((err) => {
             setLoginMessage("Login failed!");
         });
@@ -39,7 +40,7 @@ const Login = ({setActiveLearner}) => {
         </div>
         <div id="passwordInput">
             <label>Password:</label>
-            <input type="text" id="password"/>
+            <input type="password" id="password"/>
         </div>
         <div>
             <button type="button" onClick={attemptLogin}>
