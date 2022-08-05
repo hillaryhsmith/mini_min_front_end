@@ -62,7 +62,7 @@ function App() {
           <Route path="login" element={<Login setActiveLearner={setActiveLearner}/>} />
           <Route path="about" element={<About />} />
           <Route path="reviewMinerals" element={<ReviewMinerals />} />
-          <Route path="learnMinerals" element={<LearnMinerals />} />
+          <Route path="learnMinerals" element={<LearnMinerals activeLearner={activeLearner}/>} />
           <Route path="quiz" element={<Quiz />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
