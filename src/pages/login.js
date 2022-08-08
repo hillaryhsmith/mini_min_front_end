@@ -2,13 +2,9 @@ import axios from 'axios';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const getLoginURL = (username, password) => {
-    return process.env.REACT_APP_BACKEND_URL
-        + '/learners'
-        + '/' + username
-        + '/' + password
-        + '/login';
-};
+const loginUrl = process.env.REACT_APP_BACKEND_URL 
+    + '/learners/login';
+
 
 const Login = ({setActiveLearner}) => {
     const [loginMessage, setLoginMessage] = useState("Login");
@@ -17,8 +13,7 @@ const Login = ({setActiveLearner}) => {
     const attemptLogin = () => {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-        
-        axios.get(getLoginURL(username, password)).then((response) => {
+        axios.post(loginUrl, {"username": username, "password": password}).then((response) => {
             setActiveLearner({id: response.data, name: username});
             navigate("/about");
         }).catch((err) => {
