@@ -10,6 +10,7 @@ import NoPage from "./pages/noPage";
 import Home from "./pages/home";
 import Quiz from "./pages/quiz";
 import { useState, useEffect } from "react";
+import Logo from "./images/crystals.png";
 
 import axios from 'axios';
 
@@ -26,14 +27,18 @@ function App() {
 
   const Navigation = () => {
     return (
-      <nav>
-        <Link to="/">Home </Link>
-        <Link to="/about">About </Link>
-        <Link to="/register">Register </Link>
-        <Link to="/login">Login </Link>
-        <Link to="/learnMinerals">Learn Minerals </Link>
-        <Link to="/reviewMinerals">Review Minerals </Link>
-        <Link to="/quiz">Quiz </Link>
+      <nav class="navbar">
+        <div class="navbar-container">
+        <div class="menu-items">
+          <Link to="/">Home </Link>
+          <Link to="/about">About </Link>
+          <Link to="/register">Register </Link>
+          <Link to="/login">Login </Link>
+          <Link to="/learnMinerals">Learn Minerals </Link>
+          <Link to="/reviewMinerals">Review Minerals </Link>
+          <Link to="/quiz">Quiz </Link>
+        </div>
+        </div>
       </nav>
     );
   };
@@ -59,11 +64,16 @@ function App() {
 
   return (
     <main>
-      <h1>MiniMin</h1>
-      <h2>{loginStatus}</h2>
-      <h2>{mineralsLearnedStatus}</h2>
+      <header>
+        <div id="header-container">
+          <img id="logo" src={Logo} alt="crystal log"></img>
+          <h1 id="header-title">MiniMin</h1>
+          <h2 id="loginStatus">{loginStatus}</h2>
+          <h2 id="mineralStatus">{mineralsLearnedStatus}</h2>
+        </div>
+      </header>
       <BrowserRouter>
-        <Navigation></Navigation>
+        <Navigation id="nav"></Navigation>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="register" element={<Register />} />
