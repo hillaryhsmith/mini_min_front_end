@@ -12,6 +12,16 @@ const getNewMineralURL = (activeLearner) => {
         + "/randomUnlearnedMineral"; 
 };
 
+const getRandomDifferentUnlearnedMineralURL = (mineralData, activeLearner) => {
+    const mineralID = mineralData.id;
+    const learnerID = activeLearner.id;
+    return process.env.REACT_APP_BACKEND_URL
+    + "/learners"
+    + "/" + learnerID
+    + "/" + mineralID
+    + "/randomDifferentUnlearnedMineral";
+};
+
 const learnMineralURL = (mineralData, activeLearner) => {
     const mineralID = mineralData.id;
     const learnerID = activeLearner.id;
@@ -35,6 +45,14 @@ const LearnMinerals = ({updateMineralsLearned, activeLearner}) => {
     // API calls 
     const getMineralData = () => {
         axios.get(getNewMineralURL(activeLearner)).then((response) => {
+            setMineralData(response.data);
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
+
+    const getRandomDifferentUnlearnedMineral = () => {
+        axios.get(getRandomDifferentUnlearnedMineralURL(mineralData, activeLearner)).then((response) => {
             setMineralData(response.data);
         }).catch((err) => {
             console.log(err);
@@ -65,7 +83,7 @@ const LearnMinerals = ({updateMineralsLearned, activeLearner}) => {
                      learnUnlearn={learnUnlearn}
                      learnUnlearnAction={learnMineral} 
                      showNewMineral={showNewMineral}
-                     showNewMineralAction={getMineralData}>
+                     showNewMineralAction={getRandomDifferentUnlearnedMineral}>
                      learnMessage={learnMessage}
             </Mineral>
         </div>

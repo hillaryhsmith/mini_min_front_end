@@ -29,23 +29,33 @@ const Login = ({setActiveLearner}) => {
     return (
     <div>
         <h1>{loginMessage}</h1>
-        <div id="usernameInput">
-            <label>Username:</label>
-            <input type="text" id="username"/>
-        </div>
-        <div id="passwordInput">
-            <label>Password:</label>
-            <input type="password" id="password"/>
-        </div>
-        <div>
-            <button type="button" onClick={attemptLogin}>
-            Submit credentials
-            </button>
-        </div>
-        <div>
-            <button type="button" onClick={logout}>
-            Log out
-            </button>
+        <div id="login-container">
+        <form>
+                <div id="username-input">
+                    <label>Username:</label>
+                    <br></br>
+                    <input type="text" id="username"/>
+                </div>
+                <div id="password-input">
+                    <label>Password:</label>
+                    <br></br>
+                    <input type="password" id="password"/>
+                </div>
+            </form>
+            </div>
+            <br></br>
+        <div id="button-container">
+            <div>
+                <button type="button" onClick={attemptLogin}>
+                Submit credentials
+                </button>
+            </div>
+            <br></br>
+            <div>
+                <button type="button" onClick={logout}>
+                Log out
+                </button>
+            </div>
         </div>
     </div>
     )

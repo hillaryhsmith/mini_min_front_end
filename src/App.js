@@ -68,8 +68,8 @@ function App() {
         <div id="header-container">
           <img id="logo" src={Logo} alt="crystal log"></img>
           <h1 id="header-title">MiniMin</h1>
-          <h2 id="loginStatus">{loginStatus}</h2>
-          <h2 id="mineralStatus">{mineralsLearnedStatus}</h2>
+          <h2 id="login-status">{loginStatus}</h2>
+          <h2 id="mineral-status">{mineralsLearnedStatus}</h2>
         </div>
       </header>
       <BrowserRouter>

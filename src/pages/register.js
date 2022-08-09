@@ -46,19 +46,19 @@ const Register = () => {
         <br></br>
         <div id="registration-container">
             <form>
-                <div id="usernameInput">
+                <div id="username-input">
                     <label>Username: </label>
                     <br></br>
                     <input type="text" id="username"/>
                 </div>
                 <br></br>
-                <div id="passwordInput">
+                <div id="password-input">
                     <label>Password: </label>
                     <br></br>
                     <input type="password" id="password"/>
                 </div>
                 <br></br>
-                <div id="emailInput">
+                <div id="email-input">
                     <label>Email address: </label>
                     <br></br>
                     <input type="text" id="email"/>

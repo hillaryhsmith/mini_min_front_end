@@ -65,7 +65,7 @@ button {
   background-color: lavender;
   color: indigo;
   border-color: indigo;
-  font-size: 4vw; 
+  font-size: 4vw;
 }
 
 h1 {
@@ -83,11 +83,20 @@ h2 {
   align-items: center;
 }
 
+#login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 #button-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  margin: 3%;
+  gap: 44%;
 }
 
 
