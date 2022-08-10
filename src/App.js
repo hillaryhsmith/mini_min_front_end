@@ -27,9 +27,9 @@ function App() {
 
   const Navigation = () => {
     return (
-      <nav class="navbar">
-        <div class="navbar-container">
-        <div class="menu-items">
+      <nav className="navbar">
+        <div className="navbar-container">
+        <div className="menu-items">
           <Link to="/">Home </Link>
           <Link to="/about">About </Link>
           <Link to="/register">Register </Link>
@@ -81,7 +81,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="reviewMinerals" element={<ReviewMinerals updateMineralsLearned={updateMineralsLearned} activeLearner={activeLearner}/>} />
           <Route path="learnMinerals" element={<LearnMinerals updateMineralsLearned={updateMineralsLearned} activeLearner={activeLearner}/>} />
-          <Route path="quiz" element={<Quiz />} />
+          <Route path="quiz" element={<Quiz activeLearner={activeLearner}/>} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>
