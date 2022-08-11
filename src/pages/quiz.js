@@ -1,3 +1,4 @@
+import PhotoToName from "../components/photoToName";
 import TextQuestion from "../components/textQuestion";
 
 const Quiz = ({activeLearner}) => {
@@ -18,7 +19,8 @@ const Quiz = ({activeLearner}) => {
                       answerKey="specificGravity"
                       promptKey="name"
                       question="What is the specific gravity for this mineral?">                        
-        </TextQuestion>      
+        </TextQuestion> 
+        <PhotoToName activeLearner={activeLearner}></PhotoToName>     
     </div>
     );
 };

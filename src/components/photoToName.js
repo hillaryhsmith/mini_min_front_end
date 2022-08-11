@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
+import Photo from './photo';
 
 // URLS
 
@@ -11,6 +12,17 @@ const getLearnedMineralsURL = (activeLearner) => {
     + "/learnedMinerals";
 };
 
+const getPhotoURL = (mineralData) => {
+    const mineralID = mineralData.id;
+    return process.env.REACT_APP_BACKEND_URL
+        + "/minerals"
+        + "/" + mineralID
+        + "/randomPhoto";
+};
+
+
+// Helper function 
+
 const removeRandomListElement = (list) => {
     const index = Math.floor(Math.random() * list.length);
     
@@ -20,7 +32,8 @@ const removeRandomListElement = (list) => {
     return value;
 };
 
- //API calls 
+// API calls 
+
 const getLearnedMinerals = (activeLearner) => {
     return axios.get(getLearnedMineralsURL(activeLearner)).then((response) => {
         return response.data;
@@ -29,61 +42,65 @@ const getLearnedMinerals = (activeLearner) => {
     });
 };
 
+const getPhoto = (mineralData) => {
+    return axios.get(getPhotoURL(mineralData)).then((response) => {
+        return Object.assign({mineralID: mineralData.id}, response.data);
+    }).catch((err) => {
+        console.log(err);
+    });
+};
+
 // Component
 
-const TextQuestion = ({activeLearner, answerKey, promptKey, question}) => {
-
-    // Local state
-    const [prompt, setPrompt] = useState(null);
+const PhotoToName = ({activeLearner}) => {
+    //Local state
+    const [photoData, setPhotoData] = useState(null);
+    const [correctMineralId, setCorrectMineralId] = useState(null);
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [possibleAnswers, setPossibleAnswers] = useState(null);
     const [submitMessage, setSubmitMessage] = useState(null);
     
     // Messages
+    const question = "Which mineral is depicted in this photo?"
     const correct = "That's correct!"
     const incorrect = "Sorry. That's incorrect."
 
-    const generateQuestion = (learnedMinerals, answerKey, promptKey) => {
+    // Generate question 
+    const generateQuestion = (learnedMinerals) => {
         const learnedMineralsCopy = [...learnedMinerals]; 
         const correctMineral = removeRandomListElement(learnedMineralsCopy);
 
-        const candidateMinerals = learnedMineralsCopy.filter((mineral) => {
-            return mineral[promptKey] !== correctMineral[promptKey];
-        });
-
-        const answerCandidates = candidateMinerals.map((mineral) => mineral[answerKey]);
-        const uniqueCandidates = Array.from(new Set(answerCandidates));
-        
-        let incorrectAnswers = [];
+        let incorrectMinerals = [];
         for (let i = 0; i < 3; i++) {
-            incorrectAnswers.push(removeRandomListElement(uniqueCandidates));
+            incorrectMinerals.push(removeRandomListElement(learnedMineralsCopy));
         }
 
         let answers = [];
-        answers.push(correctMineral[answerKey]);
+        answers.push(correctMineral.name);
         for (let i = 0; i < 3; i++) {
-            answers.push(incorrectAnswers[i]);
+            answers.push(incorrectMinerals[i].name);
         }
 
         // we could also shuffle
         setPossibleAnswers(answers.sort());
+        setCorrectAnswer(correctMineral.name);
+        setCorrectMineralId(correctMineral.id);
 
-        setCorrectAnswer(correctMineral[answerKey]);
-        setPrompt(correctMineral[promptKey]);
+        getPhoto(correctMineral).then((photoData) => setPhotoData(photoData));
     };
 
-    const uniqueQuestionName = "choice" + answerKey + promptKey;
+    const uniqueQuestionName = "choicenamephoto";
 
+    // Check answer
     const evaluateResponse = () => {
         let learnerChoice = null 
         const choices = document.getElementsByName(uniqueQuestionName);
         for (let i = 0; i < choices.length; i++) {
             if (choices[i].checked) {
                 learnerChoice = choices[i].value;
-            }
-            
+            } 
         }
-
+        
         if (learnerChoice === correctAnswer) {
             setSubmitMessage(correct);
         } else {
@@ -95,7 +112,7 @@ const TextQuestion = ({activeLearner, answerKey, promptKey, question}) => {
     useEffect(() => {
         if (possibleAnswers === null && activeLearner !== null) {
             getLearnedMinerals(activeLearner).then((learnedMinerals) => {
-                generateQuestion(learnedMinerals, answerKey, promptKey);
+                generateQuestion(learnedMinerals);
             });
         }
     });
@@ -104,12 +121,12 @@ const TextQuestion = ({activeLearner, answerKey, promptKey, question}) => {
         return <div><p>{activeLearner === null ? "Please log in" : "Loading quiz..."}</p></div>
     }
 
-
-    // Rendered section
+    // Render section
+    
     return (
     <div>
         <h2>{question}</h2>
-        <h3>{prompt}</h3>
+        <Photo photoData = {photoData} mineralID = {correctMineralId}></Photo>
         <form>
             <div>
                 <label>{possibleAnswers[0]}</label>
@@ -129,9 +146,8 @@ const TextQuestion = ({activeLearner, answerKey, promptKey, question}) => {
             </button>
         </div>
         <p>{submitMessage}</p>
-
     </div>
     );
 };
 
-export default TextQuestion;
+export default PhotoToName;
