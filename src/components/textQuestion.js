@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { removeRandomListElement, evaluateResponse } from "../helpers/quizHelpers";
+import { removeRandomListElement, evaluateResponse, resetQuestion } from "../helpers/quizHelpers";
 
 // Component
 
@@ -44,10 +44,9 @@ const TextQuestion = ({activeLearner, learnedMinerals, answerKey, promptKey, que
 
     // Initialize page
     useEffect(() => {
-        if (possibleAnswers === null && activeLearner !== null) {
-            generateQuestion(learnedMinerals, answerKey, promptKey);
-        }
-    });
+        resetQuestion(uniqueQuestionName, setSubmitMessage);
+        generateQuestion(learnedMinerals, answerKey, promptKey);
+    }, [learnedMinerals, answerKey, promptKey, uniqueQuestionName]);
 
     if (possibleAnswers === null) {
         return <div><p>{activeLearner === null ? "Please log in" : "Loading quiz..."}</p></div>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import Photo from './photo';
-import { evaluateResponse, removeRandomListElement } from "../helpers/quizHelpers";
+import { evaluateResponse, removeRandomListElement, resetQuestion } from "../helpers/quizHelpers";
 
 // URLS
 
@@ -68,10 +68,9 @@ const NameToPhoto = ({activeLearner, learnedMinerals}) => {
     
     // Initialize page
     useEffect(() => {
-        if (correctAnswer === null && activeLearner !== null) {
-            generateQuestion(learnedMinerals);
-        }
-    });
+        resetQuestion(uniqueQuestionName, setSubmitMessage);
+        generateQuestion(learnedMinerals);
+    }, [learnedMinerals]);
 
     if (correctAnswer === null) {
         return <div><p>{activeLearner === null ? "Please log in" : "Loading quiz..."}</p></div>

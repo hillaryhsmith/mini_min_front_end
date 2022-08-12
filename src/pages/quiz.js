@@ -65,7 +65,12 @@ const Quiz = ({activeLearner}) => {
                       question="What is the specific gravity for this mineral?">                        
         </TextQuestion> 
         <PhotoToName activeLearner={activeLearner} learnedMinerals={learnedMinerals}></PhotoToName>
-        <NameToPhoto activeLearner={activeLearner} learnedMinerals={learnedMinerals}></NameToPhoto>     
+        <NameToPhoto activeLearner={activeLearner} learnedMinerals={learnedMinerals}></NameToPhoto>
+        <div>
+            <button type="button" onClick={() => setLearnedMinerals([...learnedMinerals])}>
+            Give me a different quiz
+            </button>
+        </div> 
     </div>
     );
 };

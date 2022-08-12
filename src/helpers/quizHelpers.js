@@ -23,4 +23,13 @@ const evaluateResponse = (uniqueQuestionName, correctAnswer, setSubmitMessage) =
     };
 };
 
-export {removeRandomListElement, evaluateResponse};
+const resetQuestion = (uniqueQuestionName, setSubmitMessage) => {
+    setSubmitMessage(null);
+    
+    const choices = document.getElementsByName(uniqueQuestionName);
+    for (let i = 0; i < choices.length; i++) {        
+        choices[i].checked = false;
+    } 
+};
+
+export {removeRandomListElement, evaluateResponse, resetQuestion};

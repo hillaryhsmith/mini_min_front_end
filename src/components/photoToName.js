@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import Photo from './photo';
-import { removeRandomListElement, evaluateResponse } from "../helpers/quizHelpers";
+import { removeRandomListElement, evaluateResponse, resetQuestion } from "../helpers/quizHelpers";
 
 
 // URLS
@@ -36,7 +36,7 @@ const PhotoToName = ({activeLearner, learnedMinerals}) => {
     
     // Messages
     const question = "Which mineral is depicted in this photo?"
-    
+
     // Generate question 
     const generateQuestion = (learnedMinerals) => {
         const learnedMineralsCopy = [...learnedMinerals]; 
@@ -65,10 +65,9 @@ const PhotoToName = ({activeLearner, learnedMinerals}) => {
     
     // Initialize page
     useEffect(() => {
-        if (possibleAnswers === null && activeLearner !== null) {
-            generateQuestion(learnedMinerals);
-        }
-    });
+        resetQuestion(uniqueQuestionName, setSubmitMessage)
+        generateQuestion(learnedMinerals);
+    }, [learnedMinerals]);
 
     if (possibleAnswers === null) {
         return <div><p>{activeLearner === null ? "Please log in" : "Loading quiz..."}</p></div>
