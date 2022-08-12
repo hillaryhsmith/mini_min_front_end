@@ -2,7 +2,47 @@ import PhotoToName from "../components/photoToName";
 import NameToPhoto from "../components/nameToPhoto";
 import TextQuestion from "../components/textQuestion";
 
+import axios from 'axios';
+import { useState, useEffect } from "react";
+
+const getLearnedMineralsURL = (activeLearner) => {
+    const activeLearnerID = activeLearner.id;
+    return process.env.REACT_APP_BACKEND_URL
+    + "/learners"
+    + "/" + activeLearnerID
+    + "/learnedMinerals";
+};
+
+const getLearnedMinerals = (activeLearner) => {
+    return axios.get(getLearnedMineralsURL(activeLearner)).then((response) => {
+        return response.data;
+    }).catch((err) => {
+        console.log(err);
+    });
+};
+
 const Quiz = ({activeLearner}) => {
+
+    const [learnedMinerals, setLearnedMinerals] = useState(null);
+
+    useEffect(() => {
+        if (learnedMinerals === null && activeLearner !== null) {
+            getLearnedMinerals(activeLearner).then((learnedMinerals) => {
+                setLearnedMinerals(learnedMinerals);
+            });
+        };
+    }, [learnedMinerals, activeLearner]);
+
+
+    if (learnedMinerals === null) {
+        return <div><p>{activeLearner === null ? "Please log in" : "Loading quiz..."}</p></div>
+    }
+
+    if ((new Set(learnedMinerals.map((mineral) => mineral.formula))).size < 4 ||
+        (new Set(learnedMinerals.map((mineral) => mineral.hardness))).size < 4) {
+        return <div><p>Please learn more minerals before attempting the quiz</p></div>
+    }
+
     return (
     <div>
         <h1>Quiz</h1>
@@ -26,7 +66,5 @@ const Quiz = ({activeLearner}) => {
     </div>
     );
 };
-
-// check at least 4 minerals know before quiz allowed 
 
 export default Quiz;

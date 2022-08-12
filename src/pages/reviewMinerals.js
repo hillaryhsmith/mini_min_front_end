@@ -34,7 +34,7 @@ const unlearnMineralURL = (mineralData, activeLearner) => {
 
 // Page component 
 
-const ReviewMinerals = ({updateMineralsLearned, activeLearner}) => {
+const ReviewMinerals = ({updateMineralsLearned, activeLearner, mineralsLearned}) => {
     // Local state
     const [mineralData, setMineralData] = useState(null);
     const [learnMessage, setLearnMessage] = useState("")
@@ -62,7 +62,7 @@ const ReviewMinerals = ({updateMineralsLearned, activeLearner}) => {
     };
 
     const unlearnMineral = () => {
-        axios.delete(unlearnMineralURL(mineralData, activeLearner)).then((response) => {
+        return axios.delete(unlearnMineralURL(mineralData, activeLearner)).then((response) => {
             setLearnMessage("You unlearned a mineral!")
             updateMineralsLearned();
         }).catch((err) => {
@@ -72,10 +72,14 @@ const ReviewMinerals = ({updateMineralsLearned, activeLearner}) => {
     
     // Initialize page with mineral data
     useEffect(() => {
-        if (mineralData === null && activeLearner !== null) {
+        if (mineralData === null && activeLearner !== null && mineralsLearned > 0) {
             getRandomLearnedMineral();
         }
     });
+
+    if (mineralsLearned === 0) {
+        return <p>Please learn some minerals before attempting to review</p>
+    }  
 
     // Render section 
     return (

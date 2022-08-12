@@ -37,6 +37,7 @@ const LearnMinerals = ({updateMineralsLearned, activeLearner}) => {
     // Local state
     const [mineralData, setMineralData] = useState(null);
     const [learnMessage, setLearnMessage] = useState("")
+    const [allMineralsLearned, setAllMineralsLearned] = useState(false)
     
     // Messages
     const showNewMineral = "Show me a new mineral to learn!";
@@ -48,6 +49,9 @@ const LearnMinerals = ({updateMineralsLearned, activeLearner}) => {
             setMineralData(response.data);
         }).catch((err) => {
             console.log(err);
+            if (err.response.data === "no minerals available") {
+                setAllMineralsLearned(true);
+            }
         });
     };
 
@@ -56,11 +60,14 @@ const LearnMinerals = ({updateMineralsLearned, activeLearner}) => {
             setMineralData(response.data);
         }).catch((err) => {
             console.log(err);
+            if (err.response.data === "no minerals available") {
+                setAllMineralsLearned(true);
+            }
         });
     };
 
     const learnMineral = () => {
-        axios.post(learnMineralURL(mineralData, activeLearner)).then((response) => {
+        return axios.post(learnMineralURL(mineralData, activeLearner)).then((response) => {
             setLearnMessage("You learned a mineral!");
             updateMineralsLearned();
         }).catch((err) => {
@@ -74,6 +81,10 @@ const LearnMinerals = ({updateMineralsLearned, activeLearner}) => {
             getMineralData();
         }
     });
+
+    if (allMineralsLearned) {
+        return <p>You have learned all the minerals currently in the database. Great job!</p>
+    }  
 
     // Rendered section
     return (
