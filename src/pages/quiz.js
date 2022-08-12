@@ -47,22 +47,25 @@ const Quiz = ({activeLearner}) => {
     <div>
         <h1>Quiz</h1>
         <TextQuestion activeLearner={activeLearner}
+                      learnedMinerals={learnedMinerals}
                       answerKey="name"
                       promptKey="formula"
                       question="What mineral does this chemical formula describe?">                        
         </TextQuestion>
         <TextQuestion activeLearner={activeLearner}
+                      learnedMinerals={learnedMinerals}
                       answerKey="formula"
                       promptKey="name"
                       question="What is the chemical formula for this mineral?">                        
         </TextQuestion>
         <TextQuestion activeLearner={activeLearner}
+                      learnedMinerals={learnedMinerals}
                       answerKey="specificGravity"
                       promptKey="name"
                       question="What is the specific gravity for this mineral?">                        
         </TextQuestion> 
-        <PhotoToName activeLearner={activeLearner}></PhotoToName>
-        <NameToPhoto activeLearner={activeLearner}></NameToPhoto>     
+        <PhotoToName activeLearner={activeLearner} learnedMinerals={learnedMinerals}></PhotoToName>
+        <NameToPhoto activeLearner={activeLearner} learnedMinerals={learnedMinerals}></NameToPhoto>     
     </div>
     );
 };

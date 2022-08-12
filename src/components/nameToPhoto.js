@@ -1,16 +1,9 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import Photo from './photo';
+import { evaluateResponse, removeRandomListElement } from "../helpers/quizHelpers";
 
 // URLS
-
-const getLearnedMineralsURL = (activeLearner) => {
-    const activeLearnerID = activeLearner.id;
-    return process.env.REACT_APP_BACKEND_URL
-    + "/learners"
-    + "/" + activeLearnerID
-    + "/learnedMinerals";
-};
 
 const getPhotoURL = (mineralData) => {
     const mineralID = mineralData.id;
@@ -20,27 +13,7 @@ const getPhotoURL = (mineralData) => {
         + "/randomPhoto";
 };
 
-
-// Helper function 
-
-const removeRandomListElement = (list) => {
-    const index = Math.floor(Math.random() * list.length);
-    
-    const value = list[index];
-    list.splice(index, 1);
-
-    return value;
-};
-
 // API calls 
-
-const getLearnedMinerals = (activeLearner) => {
-    return axios.get(getLearnedMineralsURL(activeLearner)).then((response) => {
-        return response.data;
-    }).catch((err) => {
-        console.log(err);
-    });
-};
 
 const getPhoto = (mineralData) => {
     return axios.get(getPhotoURL(mineralData)).then((response) => {
@@ -52,7 +25,7 @@ const getPhoto = (mineralData) => {
 
 // Component
 
-const NameToPhoto = ({activeLearner}) => {
+const NameToPhoto = ({activeLearner, learnedMinerals}) => {
     //Local state
     const [photos, setPhotos] = useState([null, null, null, null]);
     const [correctAnswer, setCorrectAnswer] = useState(null);
@@ -62,9 +35,7 @@ const NameToPhoto = ({activeLearner}) => {
     
     // Messages
     const question = "Which photo depicts the mineral?"
-    const correct = "That's correct!"
-    const incorrect = "Sorry. That's incorrect."
-
+    
     // Generate question 
     const generateQuestion = (learnedMinerals) => {
         const learnedMineralsCopy = [...learnedMinerals]; 
@@ -94,30 +65,11 @@ const NameToPhoto = ({activeLearner}) => {
     };
 
     const uniqueQuestionName = "choicephotoname";
-
-    // Check answer
-    const evaluateResponse = () => {
-        let learnerChoice = null 
-        const choices = document.getElementsByName(uniqueQuestionName);
-        for (let i = 0; i < choices.length; i++) {
-            if (choices[i].checked) {
-                learnerChoice = choices[i].value;
-            } 
-        }
-
-        if (learnerChoice === correctAnswer) {
-            setSubmitMessage(correct);
-        } else {
-            setSubmitMessage(incorrect);
-        };
-    };
     
     // Initialize page
     useEffect(() => {
         if (correctAnswer === null && activeLearner !== null) {
-            getLearnedMinerals(activeLearner).then((learnedMinerals) => {
-                generateQuestion(learnedMinerals);
-            });
+            generateQuestion(learnedMinerals);
         }
     });
 
@@ -125,7 +77,9 @@ const NameToPhoto = ({activeLearner}) => {
         return <div><p>{activeLearner === null ? "Please log in" : "Loading quiz..."}</p></div>
     }
 
-    // Render section
+    const submitHandler = () => {
+        evaluateResponse(uniqueQuestionName, correctAnswer, setSubmitMessage);
+    };
     
     return (
     <div>
@@ -153,7 +107,7 @@ const NameToPhoto = ({activeLearner}) => {
         </form>
 
         <div>
-            <button type="button" onClick={evaluateResponse}>
+            <button type="button" onClick={submitHandler}>
             Submit
             </button>
         </div>

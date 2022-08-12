@@ -1,47 +1,15 @@
-import axios from 'axios';
 import { useState, useEffect } from "react";
-
-// URLS
-
-const getLearnedMineralsURL = (activeLearner) => {
-    const activeLearnerID = activeLearner.id;
-    return process.env.REACT_APP_BACKEND_URL
-    + "/learners"
-    + "/" + activeLearnerID
-    + "/learnedMinerals";
-};
-
-const removeRandomListElement = (list) => {
-    const index = Math.floor(Math.random() * list.length);
-    
-    const value = list[index];
-    list.splice(index, 1);
-
-    return value;
-};
-
- //API calls 
-const getLearnedMinerals = (activeLearner) => {
-    return axios.get(getLearnedMineralsURL(activeLearner)).then((response) => {
-        return response.data;
-    }).catch((err) => {
-        console.log(err);
-    });
-};
+import { removeRandomListElement, evaluateResponse } from "../helpers/quizHelpers";
 
 // Component
 
-const TextQuestion = ({activeLearner, answerKey, promptKey, question}) => {
+const TextQuestion = ({activeLearner, learnedMinerals, answerKey, promptKey, question}) => {
 
     // Local state
     const [prompt, setPrompt] = useState(null);
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [possibleAnswers, setPossibleAnswers] = useState(null);
     const [submitMessage, setSubmitMessage] = useState(null);
-    
-    // Messages
-    const correct = "That's correct!"
-    const incorrect = "Sorry. That's incorrect."
 
     const generateQuestion = (learnedMinerals, answerKey, promptKey) => {
         const learnedMineralsCopy = [...learnedMinerals]; 
@@ -74,29 +42,10 @@ const TextQuestion = ({activeLearner, answerKey, promptKey, question}) => {
 
     const uniqueQuestionName = "choice" + answerKey + promptKey;
 
-    const evaluateResponse = () => {
-        let learnerChoice = null 
-        const choices = document.getElementsByName(uniqueQuestionName);
-        for (let i = 0; i < choices.length; i++) {
-            if (choices[i].checked) {
-                learnerChoice = choices[i].value;
-            }
-            
-        }
-
-        if (learnerChoice === correctAnswer) {
-            setSubmitMessage(correct);
-        } else {
-            setSubmitMessage(incorrect);
-        };
-    };
-    
     // Initialize page
     useEffect(() => {
         if (possibleAnswers === null && activeLearner !== null) {
-            getLearnedMinerals(activeLearner).then((learnedMinerals) => {
-                generateQuestion(learnedMinerals, answerKey, promptKey);
-            });
+            generateQuestion(learnedMinerals, answerKey, promptKey);
         }
     });
 
@@ -104,8 +53,10 @@ const TextQuestion = ({activeLearner, answerKey, promptKey, question}) => {
         return <div><p>{activeLearner === null ? "Please log in" : "Loading quiz..."}</p></div>
     }
 
+    const submitHandler = () => {
+        evaluateResponse(uniqueQuestionName, correctAnswer, setSubmitMessage);
+    };
 
-    // Rendered section
     return (
     <div>
         <h2>{question}</h2>
@@ -124,7 +75,7 @@ const TextQuestion = ({activeLearner, answerKey, promptKey, question}) => {
         </form>
 
         <div>
-            <button type="button" onClick={evaluateResponse}>
+            <button type="button" onClick={submitHandler}>
             Submit
             </button>
         </div>
