@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from "react"; 
 import Mineral from "../components/mineral";
+import ReviewMineralsList from '../components/reviewMineralsList';
 
 // URLS
 
@@ -32,11 +33,28 @@ const unlearnMineralURL = (mineralData, activeLearner) => {
     + "/unlearnMineral";
 };
 
+const getLearnedMineralsURL = (activeLearner) => {
+    const activeLearnerID = activeLearner.id;
+    return process.env.REACT_APP_BACKEND_URL
+    + "/learners"
+    + "/" + activeLearnerID
+    + "/learnedMinerals";
+};
+
+const getLearnedMinerals = (activeLearner) => {
+    return axios.get(getLearnedMineralsURL(activeLearner)).then((response) => {
+        return response.data;
+    }).catch((err) => {
+        console.log(err);
+    });
+};
+
 // Page component 
 
 const ReviewMinerals = ({updateMineralsLearned, activeLearner, mineralsLearned}) => {
     // Local state
     const [mineralData, setMineralData] = useState(null);
+    const [learnedMinerals, setLearnedMinerals] = useState(null);
     const [learnMessage, setLearnMessage] = useState("")
     
     // Messages
@@ -77,6 +95,12 @@ const ReviewMinerals = ({updateMineralsLearned, activeLearner, mineralsLearned})
         }
     });
 
+    useEffect(() => {
+        if (activeLearner !== null && mineralsLearned > 0) {
+            getLearnedMinerals(activeLearner).then((learnedMinerals) => setLearnedMinerals(learnedMinerals));
+        }
+    }, [activeLearner, mineralsLearned]);
+
     if (mineralsLearned === 0) {
         return <p>Please learn some minerals before attempting to review</p>
     }  
@@ -84,6 +108,7 @@ const ReviewMinerals = ({updateMineralsLearned, activeLearner, mineralsLearned})
     // Render section 
     return (
         <div>
+            <ReviewMineralsList learnedMinerals={learnedMinerals} setSelectedMineral={setMineralData}></ReviewMineralsList>
             <h1>Review Minerals</h1>
             <Mineral mineralData={mineralData} 
                      learnUnlearn={learnUnlearn}

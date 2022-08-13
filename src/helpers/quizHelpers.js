@@ -7,7 +7,7 @@ const removeRandomListElement = (list) => {
     return value;
 };
 
-const evaluateResponse = (uniqueQuestionName, correctAnswer, setSubmitMessage) => {
+const evaluateResponse = (uniqueQuestionName, correctAnswer, setSubmitMessage, markCorrect) => {
     let learnerChoice = null 
     const choices = document.getElementsByName(uniqueQuestionName);
     for (let i = 0; i < choices.length; i++) {
@@ -18,6 +18,7 @@ const evaluateResponse = (uniqueQuestionName, correctAnswer, setSubmitMessage) =
 
     if (learnerChoice === correctAnswer) {
         setSubmitMessage("That's correct!");
+        markCorrect();
     } else {
         setSubmitMessage("Sorry. That's incorrect.");
     };

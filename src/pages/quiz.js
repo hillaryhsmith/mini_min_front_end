@@ -1,6 +1,7 @@
 import PhotoToName from "../components/photoToName";
 import NameToPhoto from "../components/nameToPhoto";
 import TextQuestion from "../components/textQuestion";
+import EndOfQuiz from "../components/endOfQuiz";
 
 import axios from 'axios';
 import { useState, useEffect } from "react";
@@ -24,6 +25,8 @@ const getLearnedMinerals = (activeLearner) => {
 const Quiz = ({activeLearner}) => {
 
     const [learnedMinerals, setLearnedMinerals] = useState(null);
+    const [questionIndex, setQuestionIndex] = useState(null);
+    const [score, setScore] = useState(0);
 
     useEffect(() => {
         if (learnedMinerals === null && activeLearner !== null) {
@@ -33,8 +36,13 @@ const Quiz = ({activeLearner}) => {
         };
     }, [learnedMinerals, activeLearner]);
 
+    useEffect(() => {
+        if (learnedMinerals !== null && questionIndex === null) {
+            setQuestionIndex(0);
+        } 
+    }, [learnedMinerals, questionIndex]);
 
-    if (learnedMinerals === null) {
+    if (learnedMinerals === null || questionIndex === null) {
         return <div><p>{activeLearner === null ? "Please log in" : "Loading quiz..."}</p></div>
     }
 
@@ -43,34 +51,64 @@ const Quiz = ({activeLearner}) => {
         return <div><p>Please learn more minerals before attempting the quiz</p></div>
     }
 
+    const markCorrect = () => {
+        setScore(score + 1);
+    };
+
+    const quizComponents = [
+        <TextQuestion activeLearner={activeLearner}
+        learnedMinerals={learnedMinerals}
+        answerKey="name"
+        promptKey="formula"
+        question="What mineral does this chemical formula describe?"
+        markCorrect={markCorrect}
+        >                        
+        </TextQuestion>, 
+        <TextQuestion activeLearner={activeLearner}
+        learnedMinerals={learnedMinerals}
+        answerKey="formula"
+        promptKey="name"
+        question="What is the chemical formula for this mineral?"
+        markCorrect={markCorrect}
+        >                        
+        </TextQuestion>,
+        <TextQuestion activeLearner={activeLearner}
+        learnedMinerals={learnedMinerals}
+        answerKey="specificGravity"
+        promptKey="name"
+        question="What is the specific gravity for this mineral?"
+        markCorrect={markCorrect}
+        >                        
+        </TextQuestion>, 
+        <PhotoToName activeLearner={activeLearner} learnedMinerals={learnedMinerals} markCorrect={markCorrect}></PhotoToName>,
+        <NameToPhoto activeLearner={activeLearner} learnedMinerals={learnedMinerals} markCorrect={markCorrect}></NameToPhoto>,
+        <EndOfQuiz quizScore={score}></EndOfQuiz>
+    ];
+    
+    const makeButton = (questionIndex) => {
+        if (questionIndex === quizComponents.length -1) {
+            return (
+                <button type="button" onClick={() => {
+                    setScore(0);
+                    setQuestionIndex(0);
+                }}>
+                Give me a different quiz
+                </button>
+            )
+        } else {
+            return (
+                <button type="button" onClick={() => setQuestionIndex(questionIndex+1)}>
+                {questionIndex < (quizComponents.length - 2)  ? "Next question" : "Score my quiz"}    
+                </button>
+            )
+        }
+    };
+
     return (
-    <div>
+    <div className="quizQuestions">
         <h1>Quiz</h1>
-        <TextQuestion activeLearner={activeLearner}
-                      learnedMinerals={learnedMinerals}
-                      answerKey="name"
-                      promptKey="formula"
-                      question="What mineral does this chemical formula describe?">                        
-        </TextQuestion>
-        <TextQuestion activeLearner={activeLearner}
-                      learnedMinerals={learnedMinerals}
-                      answerKey="formula"
-                      promptKey="name"
-                      question="What is the chemical formula for this mineral?">                        
-        </TextQuestion>
-        <TextQuestion activeLearner={activeLearner}
-                      learnedMinerals={learnedMinerals}
-                      answerKey="specificGravity"
-                      promptKey="name"
-                      question="What is the specific gravity for this mineral?">                        
-        </TextQuestion> 
-        <PhotoToName activeLearner={activeLearner} learnedMinerals={learnedMinerals}></PhotoToName>
-        <NameToPhoto activeLearner={activeLearner} learnedMinerals={learnedMinerals}></NameToPhoto>
-        <div>
-            <button type="button" onClick={() => setLearnedMinerals([...learnedMinerals])}>
-            Give me a different quiz
-            </button>
-        </div> 
+        {quizComponents[questionIndex]}
+        {makeButton(questionIndex)}
     </div>
     );
 };

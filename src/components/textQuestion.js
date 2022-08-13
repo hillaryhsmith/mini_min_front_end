@@ -3,7 +3,7 @@ import { removeRandomListElement, evaluateResponse, resetQuestion } from "../hel
 
 // Component
 
-const TextQuestion = ({activeLearner, learnedMinerals, answerKey, promptKey, question}) => {
+const TextQuestion = ({activeLearner, learnedMinerals, answerKey, promptKey, question, markCorrect}) => {
 
     // Local state
     const [prompt, setPrompt] = useState(null);
@@ -53,7 +53,7 @@ const TextQuestion = ({activeLearner, learnedMinerals, answerKey, promptKey, que
     }
 
     const submitHandler = () => {
-        evaluateResponse(uniqueQuestionName, correctAnswer, setSubmitMessage);
+        evaluateResponse(uniqueQuestionName, correctAnswer, setSubmitMessage, markCorrect);
     };
 
     return (

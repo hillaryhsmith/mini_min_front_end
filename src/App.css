@@ -112,3 +112,23 @@ form {
   position: relative;
   transition: all 0.2s ease-in-out;
 }
+
+.mineralPhoto {
+  display: flex;
+  flex-direction: column;
+}
+
+.mineralPhoto img {
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  width: 35vw;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.quizQuestions button{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}

@@ -25,7 +25,7 @@ const getPhoto = (mineralData) => {
 
 // Component
 
-const NameToPhoto = ({activeLearner, learnedMinerals}) => {
+const NameToPhoto = ({activeLearner, learnedMinerals, markCorrect}) => {
     //Local state
     const [photos, setPhotos] = useState([null, null, null, null]);
     const [correctAnswer, setCorrectAnswer] = useState(null);
@@ -77,21 +77,23 @@ const NameToPhoto = ({activeLearner, learnedMinerals}) => {
     }
 
     const submitHandler = () => {
-        evaluateResponse(uniqueQuestionName, correctAnswer, setSubmitMessage);
+        evaluateResponse(uniqueQuestionName, correctAnswer, setSubmitMessage, markCorrect);
     };
     
     return (
     <div>
         <h2>{question}</h2>
         <h2>{prompt}</h2>
-        <label>a</label>
-        <Photo photoData = {photos[0]} mineralID = {possibleAnswers[0].id}></Photo>
-        <label>b</label>
-        <Photo photoData = {photos[1]} mineralID = {possibleAnswers[1].id}></Photo>
-        <label>c</label>
-        <Photo photoData = {photos[2]} mineralID = {possibleAnswers[2].id}></Photo>
-        <label>d</label>
-        <Photo photoData = {photos[3]} mineralID = {possibleAnswers[3].id}></Photo>
+        <div className='mineralPhoto'>
+            <label>a</label>
+            <Photo photoData = {photos[0]} mineralID = {possibleAnswers[0].id}></Photo>
+            <label>b</label>
+            <Photo photoData = {photos[1]} mineralID = {possibleAnswers[1].id}></Photo>
+            <label>c</label>
+            <Photo photoData = {photos[2]} mineralID = {possibleAnswers[2].id}></Photo>
+            <label>d</label>
+            <Photo photoData = {photos[3]} mineralID = {possibleAnswers[3].id}></Photo>
+        </div>
         <form>
             <div>
                 <label>a</label>
