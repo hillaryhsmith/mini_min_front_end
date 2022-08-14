@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { removeRandomListElement, evaluateResponse, resetQuestion } from "../helpers/quizHelpers";
+import { removeRandomListElement, evaluateResponse, resetQuestion, submitButton } from "../helpers/quizHelpers";
 
 // Component
 
-const TextQuestion = ({activeLearner, learnedMinerals, answerKey, promptKey, question, markCorrect}) => {
+const TextQuestion = ({activeLearner, learnedMinerals, answerKey, promptKey, question, markCorrect, markComplete, isSubmitted}) => {
 
     // Local state
     const [prompt, setPrompt] = useState(null);
@@ -53,7 +53,7 @@ const TextQuestion = ({activeLearner, learnedMinerals, answerKey, promptKey, que
     }
 
     const submitHandler = () => {
-        evaluateResponse(uniqueQuestionName, correctAnswer, setSubmitMessage, markCorrect);
+        evaluateResponse(uniqueQuestionName, correctAnswer, setSubmitMessage, markCorrect, markComplete);
     };
 
     return (
@@ -72,12 +72,7 @@ const TextQuestion = ({activeLearner, learnedMinerals, answerKey, promptKey, que
                 <input type="radio" name={uniqueQuestionName} value={possibleAnswers[3]}/>
             </div>
         </form>
-
-        <div>
-            <button type="button" onClick={submitHandler}>
-            Submit
-            </button>
-        </div>
+        {submitButton(isSubmitted, submitHandler)}        
         <p>{submitMessage}</p>
 
     </div>

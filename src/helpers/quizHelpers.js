@@ -7,14 +7,17 @@ const removeRandomListElement = (list) => {
     return value;
 };
 
-const evaluateResponse = (uniqueQuestionName, correctAnswer, setSubmitMessage, markCorrect) => {
+const evaluateResponse = (uniqueQuestionName, correctAnswer, setSubmitMessage, markCorrect, markComplete) => {
     let learnerChoice = null 
     const choices = document.getElementsByName(uniqueQuestionName);
     for (let i = 0; i < choices.length; i++) {
         if (choices[i].checked) {
             learnerChoice = choices[i].value;
-        } 
+        } else {
+            choices[i].disabled=true;
+        }
     }
+    
 
     if (learnerChoice === correctAnswer) {
         setSubmitMessage("That's correct!");
@@ -22,6 +25,8 @@ const evaluateResponse = (uniqueQuestionName, correctAnswer, setSubmitMessage, m
     } else {
         setSubmitMessage("Sorry. That's incorrect.");
     };
+
+    markComplete()
 };
 
 const resetQuestion = (uniqueQuestionName, setSubmitMessage) => {
@@ -30,7 +35,20 @@ const resetQuestion = (uniqueQuestionName, setSubmitMessage) => {
     const choices = document.getElementsByName(uniqueQuestionName);
     for (let i = 0; i < choices.length; i++) {        
         choices[i].checked = false;
+        choices[i].disabled = false;
     } 
 };
 
-export {removeRandomListElement, evaluateResponse, resetQuestion};
+const submitButton = (isSubmitted, submitHandler) => {
+    if (isSubmitted === false) {
+        return (
+            <button type="button" onClick={submitHandler}>
+            Submit
+            </button>
+        )
+    } else {
+        return ""
+    }
+};
+
+export {removeRandomListElement, evaluateResponse, resetQuestion, submitButton};

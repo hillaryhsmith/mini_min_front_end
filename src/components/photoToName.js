@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import Photo from './photo';
-import { removeRandomListElement, evaluateResponse, resetQuestion } from "../helpers/quizHelpers";
+import { removeRandomListElement, evaluateResponse, resetQuestion, submitButton } from "../helpers/quizHelpers";
 
 
 // URLS
@@ -26,7 +26,7 @@ const getPhoto = (mineralData) => {
 
 // Component
 
-const PhotoToName = ({activeLearner, learnedMinerals, markCorrect}) => {
+const PhotoToName = ({activeLearner, learnedMinerals, markCorrect, markComplete, isSubmitted}) => {
     //Local state
     const [photoData, setPhotoData] = useState(null);
     const [correctMineralId, setCorrectMineralId] = useState(null);
@@ -75,7 +75,7 @@ const PhotoToName = ({activeLearner, learnedMinerals, markCorrect}) => {
 
     
     const submitHandler = () => {
-        evaluateResponse(uniqueQuestionName, correctAnswer, setSubmitMessage, markCorrect);
+        evaluateResponse(uniqueQuestionName, correctAnswer, setSubmitMessage, markCorrect, markComplete);
     };
     
     return (
@@ -96,12 +96,7 @@ const PhotoToName = ({activeLearner, learnedMinerals, markCorrect}) => {
                 <input type="radio" name={uniqueQuestionName} value={possibleAnswers[3]}/>
             </div>
         </form>
-
-        <div>
-            <button type="button" onClick={submitHandler}>
-            Submit
-            </button>
-        </div>
+        {submitButton(isSubmitted, submitHandler)}
         <p>{submitMessage}</p>
     </div>
     );

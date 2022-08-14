@@ -27,6 +27,8 @@ const Quiz = ({activeLearner}) => {
     const [learnedMinerals, setLearnedMinerals] = useState(null);
     const [questionIndex, setQuestionIndex] = useState(null);
     const [score, setScore] = useState(0);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
 
     useEffect(() => {
         if (learnedMinerals === null && activeLearner !== null) {
@@ -55,6 +57,10 @@ const Quiz = ({activeLearner}) => {
         setScore(score + 1);
     };
 
+    const markComplete = () => {
+        setIsSubmitted(true)
+    };
+
     const quizComponents = [
         <TextQuestion activeLearner={activeLearner}
         learnedMinerals={learnedMinerals}
@@ -62,7 +68,8 @@ const Quiz = ({activeLearner}) => {
         promptKey="formula"
         question="What mineral does this chemical formula describe?"
         markCorrect={markCorrect}
-        >                        
+        markComplete={markComplete}
+        isSubmitted={isSubmitted}>                             
         </TextQuestion>, 
         <TextQuestion activeLearner={activeLearner}
         learnedMinerals={learnedMinerals}
@@ -70,7 +77,8 @@ const Quiz = ({activeLearner}) => {
         promptKey="name"
         question="What is the chemical formula for this mineral?"
         markCorrect={markCorrect}
-        >                        
+        markComplete={markComplete}
+        isSubmitted={isSubmitted}>                        
         </TextQuestion>,
         <TextQuestion activeLearner={activeLearner}
         learnedMinerals={learnedMinerals}
@@ -78,10 +86,21 @@ const Quiz = ({activeLearner}) => {
         promptKey="name"
         question="What is the specific gravity for this mineral?"
         markCorrect={markCorrect}
-        >                        
+        markComplete={markComplete}
+        isSubmitted={isSubmitted}>                        
         </TextQuestion>, 
-        <PhotoToName activeLearner={activeLearner} learnedMinerals={learnedMinerals} markCorrect={markCorrect}></PhotoToName>,
-        <NameToPhoto activeLearner={activeLearner} learnedMinerals={learnedMinerals} markCorrect={markCorrect}></NameToPhoto>,
+        <PhotoToName activeLearner={activeLearner} 
+        learnedMinerals={learnedMinerals} 
+        markCorrect={markCorrect} 
+        markComplete={markComplete}
+        isSubmitted={isSubmitted}>
+        </PhotoToName>,
+        <NameToPhoto activeLearner={activeLearner} 
+        learnedMinerals={learnedMinerals} 
+        markCorrect={markCorrect} 
+        markComplete={markComplete}
+        isSubmitted={isSubmitted}>
+        </NameToPhoto>,
         <EndOfQuiz quizScore={score}></EndOfQuiz>
     ];
     
@@ -91,16 +110,22 @@ const Quiz = ({activeLearner}) => {
                 <button type="button" onClick={() => {
                     setScore(0);
                     setQuestionIndex(0);
+                    setIsSubmitted(false);
                 }}>
                 Give me a different quiz
                 </button>
             )
-        } else {
+        } else if (isSubmitted === true) { 
             return (
-                <button type="button" onClick={() => setQuestionIndex(questionIndex+1)}>
+                <button type="button" onClick={() => {
+                setQuestionIndex(questionIndex+1);
+                setIsSubmitted(false);
+                }}>
                 {questionIndex < (quizComponents.length - 2)  ? "Next question" : "Score my quiz"}    
                 </button>
             )
+        } else {
+            return "";
         }
     };
 
