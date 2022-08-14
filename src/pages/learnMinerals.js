@@ -83,12 +83,12 @@ const LearnMinerals = ({updateMineralsLearned, activeLearner}) => {
     });
 
     if (allMineralsLearned) {
-        return <p>You have learned all the minerals currently in the database. Great job!</p>
+        return <p id="all-learned">You have learned all the minerals currently in the database.<strong>Great job!</strong></p>
     }  
 
     // Rendered section
     return (
-        <div>
+        <div id="learn-mineral">
             <h1>Learn Minerals</h1>
             <Mineral mineralData={mineralData} 
                      learnUnlearn={learnUnlearn}

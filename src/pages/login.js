@@ -27,7 +27,7 @@ const Login = ({setActiveLearner}) => {
     }
 
     return (
-    <div>
+    <div id="login"> 
         <h1>{loginMessage}</h1>
         <div id="login-container">
         <form>

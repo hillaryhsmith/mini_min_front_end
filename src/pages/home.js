@@ -1,6 +1,6 @@
 const Home = () => {
     return (    
-        <div>
+        <div id="home-page">
             <h1>Home</h1>
             <h2>Welcome to MiniMin, a mobile web app that helps you learn to identify the most common minerals!</h2>
             <p>MiniMin was created as Capstone Project for Ada Developer's Academy. 
@@ -13,6 +13,8 @@ const Home = () => {
                 and space science topics (Earth and Space Sciences Education in U.S. Secondary Schools: Key Indicators and Trends, 2018).</p> 
             <p>Access to informal education about Earth science increases understanding and reduces the knowledge gap, while helping us all 
                 to appreciate and respect our planet.</p>
+            
+            <h4>Reference</h4>
 
             <a href="https://www.americangeosciences.org/sites/default/files/SecondaryEdu2018Report_20pgPlusCovers_PrintRes_120618.pdf">
                 Earth and Space Sciences Education in U.S. Secondary Schools: Key Indicators and Trends

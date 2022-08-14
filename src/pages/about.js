@@ -1,6 +1,6 @@
 const About = () => {
     return (
-        <div>
+        <div id="about-page">
             <h1>About</h1>
             <h2>Welcome to MiniMin!</h2>
             <p>Begin by visiting our Learn Minerals page. Here you will learn information about the 
@@ -20,11 +20,11 @@ const About = () => {
                 need to spend more time studying. A new quiz will be generated with the "Give me a different quiz" button, which is offered when your 
                 quiz score is shown.
             </p>
-            <p>
+            <p><strong>
                 Enjoy learning about minerals, wherever you are, on MiniMin! 
-            </p>
+            </strong></p>
 
-            <h2>Credits</h2>
+            <h4>Credits</h4>
             <p>Photos of handsamples were accessed from the USGS Denver Library Photographic Collection. The photographer was Andrew Silver and the 
                 handsamples are from the mineral collection of Brigham Young University Department of Geology, Provo, Utah.
             </p>
