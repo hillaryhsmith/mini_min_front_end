@@ -23,6 +23,16 @@ const getPhoto = (mineralData) => {
     });
 };
 
+const anyPhotoMismatch = (photos, possibleAnswerMinerals) => {
+    for (let i = 0; i < possibleAnswerMinerals.length; i++) {
+        if (photos[i].mineralID !== possibleAnswerMinerals[i].id) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // Component
 
 const NameToPhoto = ({activeLearner, learnedMinerals, markCorrect, markComplete, isSubmitted}) => {
@@ -54,14 +64,9 @@ const NameToPhoto = ({activeLearner, learnedMinerals, markCorrect, markComplete,
         answers.sort((mineralA, mineralB) => mineralA.mindatId - mineralB.mindatId);
 
         // we could also shuffle        
-        const photoPromises = answers.map(getPhoto);
-
-        Promise.all(photoPromises).then((photos) => {
-            setPossibleAnswers(answers);
-            setPhotos(photos);
-            setPrompt(correctMineral.name);
-            setCorrectAnswer(correctMineral.id.toString());
-        });
+        setPrompt(correctMineral.name);
+        setPossibleAnswers(answers);
+        setCorrectAnswer(correctMineral.id.toString());
     };
 
     const uniqueQuestionName = "choicephotoname";
@@ -71,6 +76,13 @@ const NameToPhoto = ({activeLearner, learnedMinerals, markCorrect, markComplete,
         resetQuestion(uniqueQuestionName, setSubmitMessage);
         generateQuestion(learnedMinerals);
     }, [learnedMinerals]);
+
+    useEffect(() => {
+        if ((possibleAnswers !== null) &&
+            (photos[0] === null || anyPhotoMismatch(photos, possibleAnswers))) {
+                Promise.all(possibleAnswers.map(getPhoto)).then(setPhotos);
+            }
+    }, [possibleAnswers, photos]);
 
     if (correctAnswer === null) {
         return <div><p>{activeLearner === null ? "Please log in" : "Loading quiz..."}</p></div>
@@ -97,13 +109,17 @@ const NameToPhoto = ({activeLearner, learnedMinerals, markCorrect, markComplete,
         <form>
             <div>
                 <label>a</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[0].id}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[0].id}
+                       disabled={isSubmitted}/>
                 <label>b</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[1].id}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[1].id}
+                       disabled={isSubmitted}/>
                 <label>c</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[2].id}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[2].id}
+                       disabled={isSubmitted}/>
                 <label>d</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[3].id}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[3].id}
+                       disabled={isSubmitted}/>
             </div>
         </form>
         {submitButton(isSubmitted, submitHandler)}

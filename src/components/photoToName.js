@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import Photo from './photo';
-import { removeRandomListElement, evaluateResponse, resetQuestion, submitButton } from "../helpers/quizHelpers";
+import { removeRandomListElement, evaluateResponse, submitButton, resetQuestion } from "../helpers/quizHelpers";
 
 
 // URLS
 
-const getPhotoURL = (mineralData) => {
-    const mineralID = mineralData.id;
+const getPhotoURL = (mineralID) => {
     return process.env.REACT_APP_BACKEND_URL
         + "/minerals"
         + "/" + mineralID
@@ -16,9 +15,9 @@ const getPhotoURL = (mineralData) => {
 
 // API calls 
 
-const getPhoto = (mineralData) => {
-    return axios.get(getPhotoURL(mineralData)).then((response) => {
-        return Object.assign({mineralID: mineralData.id}, response.data);
+const getPhoto = (mineralID) => {
+    return axios.get(getPhotoURL(mineralID)).then((response) => {
+        return Object.assign({mineralID: mineralID}, response.data);
     }).catch((err) => {
         console.log(err);
     });
@@ -41,7 +40,7 @@ const PhotoToName = ({activeLearner, learnedMinerals, markCorrect, markComplete,
     const generateQuestion = (learnedMinerals) => {
         const learnedMineralsCopy = [...learnedMinerals]; 
         const correctMineral = removeRandomListElement(learnedMineralsCopy);
-
+        
         let incorrectMinerals = [];
         for (let i = 0; i < 3; i++) {
             incorrectMinerals.push(removeRandomListElement(learnedMineralsCopy));
@@ -57,17 +56,22 @@ const PhotoToName = ({activeLearner, learnedMinerals, markCorrect, markComplete,
         setPossibleAnswers(answers.sort());
         setCorrectAnswer(correctMineral.name);
         setCorrectMineralId(correctMineral.id);
-
-        getPhoto(correctMineral).then((photoData) => setPhotoData(photoData));
     };
 
     const uniqueQuestionName = "choicenamephoto";
     
     // Initialize page
     useEffect(() => {
-        resetQuestion(uniqueQuestionName, setSubmitMessage)
+        resetQuestion(uniqueQuestionName, setSubmitMessage);
         generateQuestion(learnedMinerals);
     }, [learnedMinerals]);
+
+    useEffect(() => {
+        if (correctMineralId !== null && 
+            (photoData === null || photoData.mineralID !== correctMineralId)) {
+            getPhoto(correctMineralId).then(setPhotoData);
+        } 
+    }, [correctMineralId, photoData]);
 
     if (possibleAnswers === null) {
         return <div><p>{activeLearner === null ? "Please log in" : "Loading quiz..."}</p></div>
@@ -87,13 +91,17 @@ const PhotoToName = ({activeLearner, learnedMinerals, markCorrect, markComplete,
         <form>
             <div>
                 <label>{possibleAnswers[0]}</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[0]}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[0]}
+                       disabled={isSubmitted}/>
                 <label>{possibleAnswers[1]}</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[1]}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[1]}
+                       disabled={isSubmitted}/>
                 <label>{possibleAnswers[2]}</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[2]}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[2]}
+                       disabled={isSubmitted}/>
                 <label>{possibleAnswers[3]}</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[3]}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[3]}
+                       disabled={isSubmitted}/>
             </div>
         </form>
         {submitButton(isSubmitted, submitHandler)}

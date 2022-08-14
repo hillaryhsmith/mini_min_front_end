@@ -29,7 +29,6 @@ const Quiz = ({activeLearner}) => {
     const [score, setScore] = useState(0);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-
     useEffect(() => {
         if (learnedMinerals === null && activeLearner !== null) {
             getLearnedMinerals(activeLearner).then((learnedMinerals) => {
@@ -105,7 +104,7 @@ const Quiz = ({activeLearner}) => {
     ];
     
     const makeButton = (questionIndex) => {
-        if (questionIndex === quizComponents.length -1) {
+        if (questionIndex === quizComponents.length - 1) {
             return (
                 <button type="button" onClick={() => {
                     setScore(0);
@@ -118,8 +117,8 @@ const Quiz = ({activeLearner}) => {
         } else if (isSubmitted === true) { 
             return (
                 <button type="button" onClick={() => {
-                setQuestionIndex(questionIndex+1);
-                setIsSubmitted(false);
+                    setQuestionIndex(questionIndex+1);
+                    setIsSubmitted(false);
                 }}>
                 {questionIndex < (quizComponents.length - 2)  ? "Next question" : "Score my quiz"}    
                 </button>

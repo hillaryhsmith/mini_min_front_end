@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { removeRandomListElement, evaluateResponse, resetQuestion, submitButton } from "../helpers/quizHelpers";
+import { removeRandomListElement, evaluateResponse, submitButton, resetQuestion } from "../helpers/quizHelpers";
 
 // Component
 
@@ -63,13 +63,17 @@ const TextQuestion = ({activeLearner, learnedMinerals, answerKey, promptKey, que
         <form>
             <div>
                 <label>{possibleAnswers[0]}</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[0]}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[0]}
+                       disabled={isSubmitted}/>
                 <label>{possibleAnswers[1]}</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[1]}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[1]}
+                       disabled={isSubmitted}/>
                 <label>{possibleAnswers[2]}</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[2]}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[2]}
+                       disabled={isSubmitted}/>
                 <label>{possibleAnswers[3]}</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[3]}/>
+                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[3]}
+                       disabled={isSubmitted}/>
             </div>
         </form>
         {submitButton(isSubmitted, submitHandler)}        

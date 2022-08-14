@@ -13,11 +13,13 @@ const evaluateResponse = (uniqueQuestionName, correctAnswer, setSubmitMessage, m
     for (let i = 0; i < choices.length; i++) {
         if (choices[i].checked) {
             learnerChoice = choices[i].value;
-        } else {
-            choices[i].disabled=true;
-        }
+        } 
     }
     
+    if (learnerChoice === null) {
+        setSubmitMessage("You have to pick an answer first!");
+        return;
+    }
 
     if (learnerChoice === correctAnswer) {
         setSubmitMessage("That's correct!");
@@ -26,7 +28,7 @@ const evaluateResponse = (uniqueQuestionName, correctAnswer, setSubmitMessage, m
         setSubmitMessage("Sorry. That's incorrect.");
     };
 
-    markComplete()
+    markComplete();
 };
 
 const resetQuestion = (uniqueQuestionName, setSubmitMessage) => {
@@ -35,7 +37,6 @@ const resetQuestion = (uniqueQuestionName, setSubmitMessage) => {
     const choices = document.getElementsByName(uniqueQuestionName);
     for (let i = 0; i < choices.length; i++) {        
         choices[i].checked = false;
-        choices[i].disabled = false;
     } 
 };
 
@@ -45,9 +46,9 @@ const submitButton = (isSubmitted, submitHandler) => {
             <button type="button" onClick={submitHandler}>
             Submit
             </button>
-        )
+        );
     } else {
-        return ""
+        return "";
     }
 };
 
