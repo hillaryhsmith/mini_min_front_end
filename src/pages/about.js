@@ -25,7 +25,7 @@ const About = () => {
             </strong></p>
 
             <h4>Credits</h4>
-            <p>Photos of handsamples were accessed from the USGS Denver Library Photographic Collection. The photographer was Andrew Silver and the 
+            <p>Photos of hand samples were accessed from the USGS Denver Library Photographic Collection. The photographer was Andrew Silver and the 
                 handsamples are from the mineral collection of Brigham Young University Department of Geology, Provo, Utah.
             </p>
             <p>Mineral information provided was collected from a variety of sources, including mindat.org and the text Earth Materials: Introduction 
