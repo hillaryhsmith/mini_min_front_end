@@ -33,7 +33,7 @@ const Register = () => {
             "password" : password,
             "email" : email
         }).then((response) => {
-            navigate("/about");
+            navigate("/register");
         }).catch((err) => {
             setRegistrationMessage("Registration failed!");
         });

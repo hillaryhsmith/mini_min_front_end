@@ -386,3 +386,11 @@ input[type=radio] {
 .quiz-question form {
   text-align: left;
 }
+
+#login-load {
+  text-align: center;
+}
+
+#learn-more {
+  text-align: center;
+}

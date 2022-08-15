@@ -91,7 +91,7 @@ const Mineral = ({mineralData, learnUnlearn, learnUnlearnAction, showNewMineral,
                 <button type="button" onClick={() => {learnUnlearnAction().then(showNewMineralAction);}}>
                 {learnUnlearn}
                 </button>
-                <p>{learnMessage}</p>
+                <p id='learn-message'>{learnMessage}</p>
             </div>
             <div>
                 <button type="button" onClick={showNewMineralAction}>
