@@ -93,35 +93,47 @@ const NameToPhoto = ({activeLearner, learnedMinerals, markCorrect, markComplete,
     };
     
     return (
-    <div>
+    <div className='quiz-question'>
         <h2>{question}</h2>
         <h2>{prompt}</h2>
         <div className='mineralPhoto'>
             <label>a</label>
             <Photo photoData = {photos[0]} mineralID = {possibleAnswers[0].id}></Photo>
+            <hr></hr>
             <label>b</label>
             <Photo photoData = {photos[1]} mineralID = {possibleAnswers[1].id}></Photo>
+            <hr></hr>
             <label>c</label>
             <Photo photoData = {photos[2]} mineralID = {possibleAnswers[2].id}></Photo>
+            <hr></hr>
             <label>d</label>
             <Photo photoData = {photos[3]} mineralID = {possibleAnswers[3].id}></Photo>
         </div>
         <form>
-            <div>
-                <label>a</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[0].id}
-                       disabled={isSubmitted}/>
-                <label>b</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[1].id}
-                       disabled={isSubmitted}/>
-                <label>c</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[2].id}
-                       disabled={isSubmitted}/>
-                <label>d</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[3].id}
-                       disabled={isSubmitted}/>
+            <div id="quiz-container">
+                <label>
+                    <input type="radio" name={uniqueQuestionName} value={possibleAnswers[0].id}
+                           disabled={isSubmitted}/>
+                    a
+                </label>
+                <label>
+                    <input type="radio" name={uniqueQuestionName} value={possibleAnswers[1].id}
+                           disabled={isSubmitted}/>
+                    b
+                </label>
+                <label>
+                    <input type="radio" name={uniqueQuestionName} value={possibleAnswers[2].id}
+                           disabled={isSubmitted}/>
+                    c
+                </label>
+                <label>
+                    <input type="radio" name={uniqueQuestionName} value={possibleAnswers[3].id}
+                           disabled={isSubmitted}/>
+                    d
+                </label>
             </div>
         </form>
+        <br></br>
         {submitButton(isSubmitted, submitHandler)}
         <p>{submitMessage}</p>
     </div>

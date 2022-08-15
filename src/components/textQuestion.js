@@ -57,25 +57,34 @@ const TextQuestion = ({activeLearner, learnedMinerals, answerKey, promptKey, que
     };
 
     return (
-    <div>
+    <div className="quiz-question">
         <h2>{question}</h2>
         <h3>{prompt}</h3>
         <form>
-            <div>
-                <label>{possibleAnswers[0]}</label>
-                <input type="radio" name={uniqueQuestionName} value={possibleAnswers[0]}
-                       disabled={isSubmitted}/>
-                <label>{possibleAnswers[1]}</label>
+            <div id="quiz-container">
+                <label>
+                    <input type="radio" name={uniqueQuestionName} value={possibleAnswers[0]}
+                        disabled={isSubmitted}/>
+                    {possibleAnswers[0]}
+                </label>
+                <label>
                 <input type="radio" name={uniqueQuestionName} value={possibleAnswers[1]}
                        disabled={isSubmitted}/>
-                <label>{possibleAnswers[2]}</label>
+                    {possibleAnswers[1]}
+                </label>
+                <label>
                 <input type="radio" name={uniqueQuestionName} value={possibleAnswers[2]}
                        disabled={isSubmitted}/>
-                <label>{possibleAnswers[3]}</label>
+                    {possibleAnswers[2]}
+                </label>
+                <label>
                 <input type="radio" name={uniqueQuestionName} value={possibleAnswers[3]}
                        disabled={isSubmitted}/>
+                    {possibleAnswers[3]}
+                </label>
             </div>
         </form>
+        <br></br>
         {submitButton(isSubmitted, submitHandler)}        
         <p>{submitMessage}</p>
 

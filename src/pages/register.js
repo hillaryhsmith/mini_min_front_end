@@ -42,7 +42,7 @@ const Register = () => {
     return (
     <div id="registration">
         <h1>Register</h1>
-        <h2>{registrationMessage}</h2>
+        <h4>{registrationMessage}</h4>
         <br></br>
         <div id="registration-container">
             <form>

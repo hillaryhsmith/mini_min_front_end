@@ -5,17 +5,18 @@ const ReviewMineralsList = ({learnedMinerals, setSelectedMineral}) => {
 
     const mineralListElement = (mineral) => {
         return (
-            <h4 key={mineral.name} onClick={()=>setSelectedMineral(mineral)}>
+            <p key={mineral.name} onClick={()=>setSelectedMineral(mineral)}>
                 {mineral.name}
-            </h4>
+            </p>
         );
     };
     
     return (
-        <div>
+        <div id="mineral-list">
             <h2>Learned Minerals</h2>
             <p>Click mineral name to review</p>
-            {learnedMinerals.map(mineralListElement)}
+            <div id="list">{learnedMinerals.map(mineralListElement)}</div>
+            
         </div>
     )
 

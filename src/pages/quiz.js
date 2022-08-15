@@ -100,7 +100,7 @@ const Quiz = ({activeLearner}) => {
         markComplete={markComplete}
         isSubmitted={isSubmitted}>
         </NameToPhoto>,
-        <EndOfQuiz quizScore={score}></EndOfQuiz>
+        <EndOfQuiz quizScore={score + " /  5"}></EndOfQuiz>
     ];
     
     const makeButton = (questionIndex) => {
@@ -116,12 +116,14 @@ const Quiz = ({activeLearner}) => {
             )
         } else if (isSubmitted === true) { 
             return (
-                <button type="button" onClick={() => {
-                    setQuestionIndex(questionIndex+1);
-                    setIsSubmitted(false);
-                }}>
-                {questionIndex < (quizComponents.length - 2)  ? "Next question" : "Score my quiz"}    
-                </button>
+                <div>
+                    <button type="button" onClick={() => {
+                        setQuestionIndex(questionIndex+1);
+                        setIsSubmitted(false);
+                    }}>
+                    {questionIndex < (quizComponents.length - 2)  ? "Next question" : "Score my quiz"}    
+                    </button>
+                </div>
             )
         } else {
             return "";
@@ -129,10 +131,12 @@ const Quiz = ({activeLearner}) => {
     };
 
     return (
-    <div className="quizQuestions">
+    <div id="quiz-page">
         <h1>Quiz</h1>
         {quizComponents[questionIndex]}
         {makeButton(questionIndex)}
+        <br></br>
+        <br></br>
     </div>
     );
 };

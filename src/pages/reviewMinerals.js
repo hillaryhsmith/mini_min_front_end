@@ -107,9 +107,9 @@ const ReviewMinerals = ({updateMineralsLearned, activeLearner, mineralsLearned})
 
     // Render section 
     return (
-        <div>
-            <ReviewMineralsList learnedMinerals={learnedMinerals} setSelectedMineral={setMineralData}></ReviewMineralsList>
+        <div id="review-mineral">
             <h1>Review Minerals</h1>
+            <ReviewMineralsList learnedMinerals={learnedMinerals} setSelectedMineral={setMineralData}></ReviewMineralsList>
             <Mineral mineralData={mineralData} 
                      learnUnlearn={learnUnlearn}
                      learnUnlearnAction={unlearnMineral} 

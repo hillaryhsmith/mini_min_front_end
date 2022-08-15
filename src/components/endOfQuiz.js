@@ -3,6 +3,8 @@ const EndOfQuiz = ({quizScore}) => {
         <div>
             <h2>Your score is:</h2>
             {quizScore}
+            <br></br>
+            <br></br>
         </div>
     )
 

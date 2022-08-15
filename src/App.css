@@ -70,15 +70,6 @@ button {
   border-radius: 8px;
 }
 
-/* h1 {
-  font-size: 7vw;
-  text-align: center;
-}
-
-h2 {
-  text-align: center;
-} */
-
 #registration-container {
   display: flex;
   justify-content: center;
@@ -91,7 +82,6 @@ h2 {
   align-items: center;
 }
 
-
 #button-container {
   display: flex;
   justify-content: center;
@@ -99,7 +89,6 @@ h2 {
   flex-direction: column;
   margin: 3%;
 }
-
 
 form {
   background-color: plum;
@@ -113,21 +102,28 @@ form {
   text-align: center;
   position: relative;
   transition: all 0.2s ease-in-out;
+  font-size: 3vw;
 }
 
 .mineralPhoto {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: 3%;
 }
 
 .mineralPhoto img {
-  /* margin-left: auto; */
-  /* margin-right: auto; */
+  display: block;
+  margin: auto;
+}
+
+/* .mineralPhoto img {
   width: 35vw;
   height: auto;
   display: flex;
   flex-direction: row;
-}
+} */
 
 .quizQuestions button{
   display: flex;
@@ -170,7 +166,6 @@ form {
   margin: 3%;
   text-align: center;
 }
-
 
 #about-page p, a {
   display: flex;
@@ -216,31 +211,40 @@ form {
   margin: 3%;
   text-align: center;
 }
+#registration h4{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  font-size: 4.5vw;
+  margin: 3%;
+  text-align: center;
+}
 
 #registration-container {
   font-size: 3vw;
 }
 
-#registration-container input{
+input{
   width: 75%;
+  font-size: 3vw;
 }
 
-#login h1{
+#login {
   display: flex;
   flex-direction: column;
   justify-content: center; 
-  font-size: 9vw;
   margin: 3%;
   text-align: center;
+}
+
+#login h1 {
+  font-size: 9vw;
 }
 
 #login-container {
   font-size: 3vw;
 }
 
-#login-container input{
-  width: 75%;
-}
 
 #all-learned {
   display: flex;
@@ -249,4 +253,136 @@ form {
   font-size: 3vw;
   margin: 3%;
   text-align: center;
+}
+
+#learn-mineral {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  margin: 3%;
+  text-align: center;
+}
+
+#learn-mineral h1 {
+  font-size: 9vw;
+}
+#learn-mineral h2 {
+  font-size: 6vw;
+}
+
+#learn-mineral h3 {
+  font-size: 5vw;
+}
+
+#learn-mineral h4 {
+  font-size: 4.5vw;
+}
+#learn-mineral p, a {
+  font-size: 3vw;
+}
+
+#learn-mineral img {
+  width: 85%;
+}
+
+#mineral-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  margin: 3%;
+  text-align: center;
+}
+#mineral-list p {
+  font-size: 3vw;
+}
+
+#list { 
+  color: plum;
+  font-size: 2vw;
+}
+
+#mineral-list h2 {
+  font-size: 6vw;
+}
+
+#review-mineral {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  margin: 3%;
+  text-align: center;
+}
+
+#review-mineral h1 {
+  font-size: 9vw;
+}
+#review-mineral h2 {
+  font-size: 6vw;
+}
+
+#review-mineral h3 {
+  font-size: 5vw;
+}
+
+#review-mineral h4 {
+  font-size: 4.5vw;
+}
+#review-mineral p, a {
+  font-size: 3vw;
+}
+
+#review-mineral img {
+  width: 85%;
+}
+
+#quiz-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  margin: 3%;
+  text-align: center;
+}
+
+#quiz-page h1 {
+  font-size: 9vw;
+}
+#quiz-page h2 {
+  font-size: 6vw;
+}
+
+#quiz-page h3 {
+  font-size: 5vw;
+}
+
+#quiz-page h4 {
+  font-size: 4.5vw;
+}
+#quiz-page p, a {
+  font-size: 3vw;
+}
+
+#quiz-page img {
+  width: 85%;
+}
+
+#quiz-container {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  flex-direction: column;
+}
+
+.quiz-question {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+input[type=radio] {
+  width: auto;
+} 
+
+.quiz-question form {
+  text-align: left;
 }
