@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# MiniMin 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This mobile-first web app was created as a capstone projet for Ada Developers Academy, cohort 17. 
 
-## Available Scripts
+MiniMin is a mineralogy teaching tool geared towards hobbyists and students at the secondary and tertiary levels. 
 
-In the project directory, you can run:
+### Features 
+There are three primary features of the MiniMin. 
 
-### `yarn start`
+Learn Minerals:
+The learner will access unlearned mineral cards, gaining information about the physical and chemical properties of minerals and seeing photos of hand samples. Pushing the "I've learned this mineral" button will add it to the learner's list of minerals to review.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Review Minerals:  
+The learner can study the information presented in Learn Minerals. Specific mineral cards can be navigated to using the list at the top of the page. A randomly selected mineral will be shown for review by scrolling down. Clicking the "Show me a new mineral to review" button will display information about a different randomly selected mineral. Clicking the "I've forgotten this mineral" button will move it out of the learner's collection of learned minerals. It will be presented again on the Learn Minerals page.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Quiz: A short quiz of 5 questions will be generated to test the learner's knowledge of their learned minerals, including the ability to identify them from a photo. Feedback after each question and a score at the end will be provided. A new quiz will be generated with the "Give me a different quiz" button, which is offered when the quiz score is shown.
 
-### `yarn test`
+In order to access the mineral cards and quiz features, learners must register an account at the Register page and use the Login page to log in. 
+This allows the app to keep track of which minerals have been learned. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Additional pages include Home and About. 
+Home describes the motivation for the app and the intended audience.
+About includes descriptions of the features and credits for the images, icons, and mineral data. 
 
-### `yarn build`
+### Dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The dependencies include axios, react and react router. 
+A full list of dependences can be found in package.json. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Setting Up
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+It is recommended to install with yarn (https://yarnpkg.com/).
 
-### `yarn eject`
+1. Clone this git repository 
+2. Use 'yarn install' to install dependencies
+3. Use 'yarn start' to run on local port
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
